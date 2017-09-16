@@ -1,0 +1,12 @@
+{
+  "programming-languages" : ["java", "c++", "php", "python", "sql", "ruby", "r", "lua", "html", "css", "sas", "matlab", "go", "c#", "julia", "scala",
+                            "octave"],
+
+  "frameworks" : ["hadoop", "spark", "mysql", "hbase", "mongodb", "theano", "tensorflow", "caffe", "keras", "pig", "hive", "nosql", "numpy"
+                  ,"scipy", "git", "pytorch", "opencv", "cuda", "torch", "mxnet", "aws", "cudnn","cntk", "elasticsearch"],
+
+  "academia" : ["phd", "masters", "bachelors", "publications", "nips", "cvpr", "published", "icml", "statistics", "mathematics", "robotics","nlp"],
+
+  "misc" : ["android","ios", "jira", "kafka", "jenkins", "unix", "linux", "embedded", "gpu", "slam", "dsp", "kaggle", "lstm", "mapreduce", "github", "parallel",
+            "distributed","graphical", "deep", "ml", "ai"]
+}
