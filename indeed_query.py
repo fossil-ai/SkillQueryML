@@ -16,6 +16,7 @@ class IndeedJobFrequency:
 		self.driver = webdriver.Chrome(os.getcwd() + "/chromedriver.exe")
 		self.urls = []
 		self.tag_list = []
+		self.search_tags = ["programming-languages", "frameworks", "academia", "misc"]
 
 	def getURLs(self):
 		for i in range(self.numOfPages):
@@ -38,25 +39,15 @@ class IndeedJobFrequency:
 	def __getTagDicts(self):
 		with open(self.json_file) as data_file:
 			data = json.load(data_file)
-		pl_tags = data["programming-languages"]
-		pl_dict = {}
-		for tag in pl_tags:
-			pl_dict[tag] = 0
-		fw_tags = data["frameworks"]
-		fw_dict= {}
-		for tag in fw_tags:
-			fw_dict[tag] = 0
-		aca_tags = data["academia"]
-		aca_dict = {}
-		for tag in aca_tags:
-			aca_dict[tag] = 0
-		misc_tags = data["misc"]
-		misc_dict = {}
-		for tag in misc_tags:
-			misc_dict[tag] = 0
-		return [pl_dict, fw_dict, aca_dict, misc_dict]
+		dict_list = []
+		for i in range(len(data)):
+			temp_dict = {}
+			for tag in data[self.search_tags[i]]:
+				temp_dict[tag] = 0
+			dict_list.append(temp_dict)
+		return dict_list
 
-	def __updateFreqCountFromPage(self, _url):
+	def __getTextFromPage(self, _url):
 		try:
 			url = self.indeed_url + _url
 			soup = self.__getSoupObj(url)
@@ -75,7 +66,7 @@ class IndeedJobFrequency:
 		count = 0
 		for url in urls:
 			print(url)
-			text = self.__updateFreqCountFromPage(url)
+			text = self.__getTextFromPage(url)
 			for dictionary in freqDict:
 				for word in text:
 					if word in dictionary:
@@ -84,26 +75,39 @@ class IndeedJobFrequency:
 			print(count)
 		return freqDict
 
-	def plot(self):
-		freqcounts = self.__getFreqCounts()
-		for updated_dict in freqcounts:
-			ranked_tuples = reversed(sorted(updated_dict.items(), key=lambda x: x[1]))
-			labels = []
-			scores = []
-			for i in ranked_tuples:
-				labels.append(i[0])
-				scores.append(i[1])
-			y_pos = np.arange(len(labels))
-			plt.barh(y_pos, list(reversed(scores)), align='center', alpha=0.5)
-			plt.yticks(y_pos, list(reversed(labels)))
-			plt.xlabel('Count')
-			plt.title('Word Frequencies in Machine Learning Job Postings')
-			plt.show()
+
+	def run(self):
+		freqcount_dicts = self.__getFreqCounts()
+		for i in range(len(self.search_tags)):
+			filename = '{}_results.json'.format(self.search_tags[i])
+			with open(filename, 'w') as fp:
+				json.dump(freqcount_dicts[i], fp)
+
+	def plot(self, filename):
+		try:
+			with open(filename) as data_file:
+				data = json.load(data_file)
+		except:
+			print("Filename doesn't exist")
+			return
+		print(data)
+		ranked_tuples = reversed(sorted(data.items(), key=lambda x: x[1]))
+		labels = []
+		scores = []
+		for i in ranked_tuples:
+			labels.append(i[0])
+			scores.append(i[1])
+		y_pos = np.arange(len(labels))
+		plt.barh(y_pos, list(reversed(scores)), align='center', alpha=0.5)
+		plt.yticks(y_pos, list(reversed(labels)))
+		plt.xlabel('Count')
+		plt.title('Word Frequencies in Queried Job Postings')
+		plt.show()
 
 
-indeed = IndeedJobFrequency("search_tags.json", "machine+learning", 100)
-indeed.plot()
-
+indeed = IndeedJobFrequency("search_tags.json", "data+scientist", 1)
+indeed.run()
+indeed.plot("academia_results.json")
 
 #
 
