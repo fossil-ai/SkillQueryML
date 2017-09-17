@@ -105,9 +105,11 @@ class IndeedJobFrequency:
 		plt.show()
 
 
-indeed = IndeedJobFrequency("search_tags.json", "data+scientist", 1)
+indeed = IndeedJobFrequency("search_tags.json", "data+analytics", 100)
 indeed.run()
+indeed.plot("programming-languages_results.json")
+indeed.plot("frameworks_results.json")
 indeed.plot("academia_results.json")
+indeed.plot("misc_results.json")
 
-#
 

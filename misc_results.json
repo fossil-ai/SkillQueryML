@@ -1,1 +1,1 @@
-{"github": 1, "android": 0, "mapreduce": 0, "graphical": 0, "parallel": 0, "dsp": 0, "slam": 0, "distributed": 0, "ml": 1, "gpu": 0, "kafka": 0, "jenkins": 1, "jira": 1, "embedded": 0, "linux": 3, "unix": 0, "ios": 0, "lstm": 0, "deep": 4, "kaggle": 0, "ai": 0}
+{"mapreduce": 19, "lstm": 0, "linux": 39, "unix": 21, "kaggle": 1, "parallel": 12, "ios": 11, "android": 9, "dsp": 5, "gpu": 2, "embedded": 15, "slam": 0, "ai": 24, "jenkins": 4, "jira": 10, "distributed": 45, "ml": 38, "graphical": 15, "kafka": 11, "deep": 173, "github": 6}
